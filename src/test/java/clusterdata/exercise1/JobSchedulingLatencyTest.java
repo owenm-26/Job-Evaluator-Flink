@@ -41,6 +41,7 @@ public class JobSchedulingLatencyTest extends JobEventTestBase<JobEvent> {
                 d_schedule);
 
         List<?> results = results(source);
+        System.out.println(results);
         assertEquals(3, results.size());
         assertEquals(true, results.contains(Tuple2.of(1L, 5L)));
         assertEquals(true, results.contains(Tuple2.of(2L, 15L)));

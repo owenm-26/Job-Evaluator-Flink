@@ -12,6 +12,7 @@ import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.KeyedStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.functions.source.SourceFunction;
 
 import java.util.Objects;
 
@@ -40,22 +41,22 @@ public class JobEventCount extends AppBase {
 
 
 
-        // TODO: process events to count the how many events for each jobId
+        // DONE: process events to count how many events for each jobId
         // Complete: result = ...
 
 //        Assign values of 1
-        DataStream<Tuple2<Integer, Integer>> valuedEvents = events
+        DataStream<Tuple2<Long, Long>> valuedEvents = events
                 .map(new MyMapFunction())
                 .name("valuedEvents");
 
 //        Separate by Keys
-        KeyedStream<Tuple2<Integer, Integer>, Integer> keySeperated = valuedEvents
+        KeyedStream<Tuple2<Long, Long>, Long> keySeperated = valuedEvents
                 .keyBy(value -> value.f0);
 
 //        Count by keys
-        DataStream<Tuple2<Integer, Integer>> counted = keySeperated
-                .reduce(new MyReduceFunction())
-                        .name("countedEvents");
+        DataStream<Tuple2<Long, Long>> counted = keySeperated.sum(1);
+//                .reduce(new MyReduceFunction())
+//                        .name("countedEvents");
 
 
 
@@ -66,18 +67,18 @@ public class JobEventCount extends AppBase {
     }
 
 //    Sums all the jobs' values
-    private static class MyReduceFunction implements ReduceFunction< Tuple2<Integer, Integer>> {
+    private static class MyReduceFunction implements ReduceFunction< Tuple2<Long, Long>> {
         @Override
-        public  Tuple2<Integer, Integer> reduce( Tuple2<Integer, Integer> val1,  Tuple2<Integer, Integer> val2){
-            return Tuple2.of(val1.f0, val1.f1.intValue() + val2.f1.intValue());
+        public  Tuple2<Long, Long> reduce( Tuple2<Long, Long> val1,  Tuple2<Long, Long> val2){
+            return Tuple2.of(val1.f0, val1.f1 + val2.f1);
         }
     }
 
 //    Assigns each job a value of 1
-    private static class MyMapFunction implements MapFunction<JobEvent, Tuple2<Integer, Integer>> {
+    private static class MyMapFunction implements MapFunction<JobEvent, Tuple2<Long, Long>> {
         @Override
         public Tuple2 map(JobEvent object){
-            return Tuple2.of(object.jobId, 1);
+            return Tuple2.of(object.jobId, 1L);
         }
     }
 }
