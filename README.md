@@ -1,3 +1,4 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/fN8Ytt_v)
 # Cluster data analysis
 
 In this discussion, we will be using a subset of traces from a large Google cluster of 12.5k machines. Make sure to carefully read the [data specification and download instructions](https://github.com/google/cluster-data/blob/master/ClusterData2011_2.md) as well as the [format and schema document](https://drive.google.com/file/d/0B5g07T_gRDg9Z0lsSTEtTWtpOW8/view?resourcekey=0-cozD56gA4fUDdrkHnLJSrQ).
