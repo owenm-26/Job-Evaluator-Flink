@@ -13,9 +13,9 @@ public class AppBase {
     public static int parallelism = 4;
 
 
-    // TODO: change to your own path
-    public final static String pathToJobEventData = "/Users/vkalavri/workspace/teaching/cs551-25/exercises/discussion3/clusterdata/data/job_events";
-    public final static String pathToTaskEventData = "//Users/vkalavri/workspace/teaching/cs551-25/exercises/discussion3/clusterdata/data/task_events";
+    // DONE: change to your own path
+    public final static String pathToJobEventData = "/Users/owenmariani/Desktop/School/junior-year/cs551/disc-3-owenm-26/data/job_events";
+    public final static String pathToTaskEventData = "/Users/owenmariani/Desktop/School/junior-year/cs551/disc-3-owenm-26/data/task_events";
 
 
     public static SourceFunction<JobEvent> jobSourceOrTest(SourceFunction<JobEvent> source) {
