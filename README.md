@@ -1,20 +1,42 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/fN8Ytt_v)
-# Cluster data analysis
+# Real-Time Data Stream Processing with Apache Flink  
 
-In this discussion, we will be using a subset of traces from a large Google cluster of 12.5k machines. Make sure to carefully read the [data specification and download instructions](https://github.com/google/cluster-data/blob/master/ClusterData2011_2.md) as well as the [format and schema document](https://drive.google.com/file/d/0B5g07T_gRDg9Z0lsSTEtTWtpOW8/view?resourcekey=0-cozD56gA4fUDdrkHnLJSrQ).
+## Project Overview  
+This project demonstrates the implementation of two Apache Flink applications focused on real-time data stream processing. The goal was to develop scalable, performant solutions for event counting and latency measurement while adhering to strict requirements and constraints.  
 
-For the purpose of this assignment, we will use parts 0, 1, and 2 of the Job and Task Events tables. This data is already populated in your data folder.
+The two applications implemented are:  
+1. **Job Event Counter** (`JobEventCount.java`) - Counts job-related events, handling duplicate entries.  
+2. **Job Scheduling Latency Calculator** (`JobSchedulingLatency.java`) - Computes scheduling latencies from event data.  
 
-**Do not extract the .gz files!**
+Both implementations highlight the use of Flink’s DataStream API and its operators for real-time data processing.  
 
-After reading the resources above, open the `clusterdata.utils.AppBase class` and point the variables `pathToJobEventData` and `pathToTaskEventData` to the appropriate locations.
+---
 
+## Features  
+- **Efficient Event Handling:** Processes and deduplicates multiple event types for accurate results.  
+- **Real-Time Analytics:** Utilizes Flink’s stream processing framework to calculate metrics with low latency.  
+- **Scalable Parallelism:** Configured for parallel execution to scale with higher data loads.  
+- **Test-Driven Development:** Thoroughly tested using Flink-based unit tests to ensure correctness and reliability.  
 
-## Tasks
-You will have to implement two Flink application under files `exercise1/JobEventCount.java` and `exercise1/JobSchedulingLatency.java`. You might get duplicate events. For example, you can get 2 submit events for the same job id. You do not need consider crash cases (i.e. fault tolerance) and you can store data in memory. 
+---
 
-Refer to the Flink documentation to find suitable operators for the given tasks: https://nightlies.apache.org/flink/flink-docs-release-1.20/docs/dev/datastream/operators/overview/ 
+## Key Requirements  
+- **No External Dependencies:** All code was implemented within the designated files without modifying other parts of the project.  
+- **In-Memory Storage:** Solutions are optimized to store data in memory, without persisting to external storage.  
+- **Fault Tolerance Not Required:** Simplified assumptions exclude crash recovery scenarios.  
 
-No other files should be changed or modified and the only code needed are the implementations for the two methods provided. There are TODO labels showing the desired outcome and what to do for each method.
+---
 
-After completion, you should be able to test your code using tests `JobEventCountTest.java` and `exercise1/JobSchedulingLatencyTest.java`. During testing, change `env.setParallelism(1);` in the application files to reflect larger than 1 Parallelism factor.
+## How It Works  
+### 1. **Job Event Counter**  
+This application processes a stream of job-related events, such as submissions, updates, and completions, to count the number of events for each job ID.  
+
+Key tasks include:  
+- Identifying and handling duplicate events.  
+- Using Flink operators like `KeyBy` and `Reduce` for aggregation.  
+
+### 2. **Job Scheduling Latency Calculator**  
+This application computes the time difference between job submission and job scheduling events, producing accurate latency metrics.  
+
+Key tasks include:  
+- Correlating events with matching job IDs.  
+- Using operators such as `KeyBy` and `ProcessFunction` for stateful computations.  
